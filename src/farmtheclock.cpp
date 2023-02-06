@@ -1,18 +1,17 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Player.cpp"
-#include "Background.cpp"
 
-const int CRAD = 32;
-const int WIDTH = CRAD * 32;
-const int HEIGTH = CRAD * 16;
+const int SIZE = 64;
+const int WIDTH = SIZE * 24;
+const int HEIGTH = SIZE * 12;
 
 int xGridToCord(int gridX) {
-    return gridX*CRAD;
+    return gridX*SIZE;
 }
 
 int yGridToCord(int gridY) {
-    return gridY*CRAD;
+    return gridY*SIZE;
 }
 
 int main()
@@ -25,11 +24,10 @@ int main()
     short int swidth = sf::VideoMode::getDesktopMode().width;
     short int sheight = sf::VideoMode::getDesktopMode().height;
     short int wposx = swidth/2 - (WIDTH/2);
-    short int wposy = sheight/2 - (HEIGTH/2)+50;
+    short int wposy = sheight/2 - (HEIGTH/2);
     window.setPosition(sf::Vector2i(wposx, wposy));
 
     Player player("assets/textures/farmer-static.png");
-    Background background("assets/textures/background.png");
 
     while (window.isOpen())
     {
@@ -43,7 +41,6 @@ int main()
         player.update();
 
         window.clear();
-        window.draw(background.sprite);
         window.draw(player.sprite);
         window.display();
     }
