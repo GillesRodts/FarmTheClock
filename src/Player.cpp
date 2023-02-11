@@ -11,21 +11,20 @@ public:
     }
 
     void update() {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            sprite.move((-1.f)*speed, 0.f);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            sprite.move(-7, 0);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-            sprite.move((1.f)*speed, 0.f);
+            
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            sprite.move(7, 0);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            sprite.move(0.f, (-1.f)*speed);
+            
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            sprite.move(0, -7);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            sprite.move(0.f, (1.f)*speed);
+            
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            sprite.move(0, 7);
         }
     }
 };

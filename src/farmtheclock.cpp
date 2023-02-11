@@ -2,52 +2,30 @@
 #include <iostream>
 #include "Player.cpp"
 #include "Tilemap.cpp"
-// git auth: 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
+#include "level.cpp"
+#include "MainView.cpp"
 
 const int SIZE = 64;
-const int WIDTH = SIZE * 24;
-const int HEIGTH = SIZE * 12;
-
-int xGridToCord(int gridX) {
-    return gridX*SIZE;
-}
-
-int yGridToCord(int gridY) {
-    return gridY*SIZE;
-}
+const int WIDTH = SIZE * 30;
+const int HEIGTH = SIZE * 14;
 
 int main()
 {
     // placing the window, full-screen disabled!
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGTH), "Farm The Clock | Alfa 1.0", sf::Style::Close | sf::Style::Titlebar);
+    sf::RenderWindow window(sf::VideoMode(960, 448), "Farm The Clock | Alfa 1.0", sf::Style::Close | sf::Style::Titlebar);
     window.setFramerateLimit(60);
 
-    // placing window on the middle of the screen
-    short int swidth = sf::VideoMode::getDesktopMode().width;
-    short int sheight = sf::VideoMode::getDesktopMode().height;
-    short int wposx = swidth/2 - (WIDTH/2);
-    short int wposy = sheight/2 - (HEIGTH/2);
-    window.setPosition(sf::Vector2i(wposx, wposy));
+    // setting window in the middle of the screen.
+    window.setPosition(sf::Vector2i((sf::VideoMode::getDesktopMode().width - window.getSize().x) / 2, (sf::VideoMode::getDesktopMode().height - window.getSize().y) / 2));
+
+    //setting a view
+    NewView view(WIDTH, HEIGTH, 0.5);
 
     Player player("assets/farmer-static.png");
-
-    const int background[] = {
-        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-        4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 11, 6,
-        4, 5, 12, 5, 5, 11, 5, 5, 5, 3, 5, 5, 5, 12, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6,
-        4, 5, 5, 5, 13, 5, 5, 5, 5, 3, 5, 5, 5, 5, 14, 5, 5, 5, 13, 5, 5, 5, 5, 6,
-        4, 5, 5, 5, 5, 5, 5, 12, 5, 3, 5, 5, 5, 5, 5, 5, 11, 5, 5, 5, 14, 12, 5, 6,
-        4, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6,
-        4, 5, 5, 5, 5, 12, 5, 5, 5, 3, 5, 5, 11, 5, 5, 5, 5, 12, 5, 5, 5, 5, 5, 6,
-        4, 5, 5, 5, 5, 5, 5, 5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 5, 6,
-        4, 5, 14, 5, 11, 5, 5, 5, 5, 5, 5, 5, 5, 14, 5, 5, 5, 5, 5, 3, 5, 5, 5, 6,
-        4, 5, 5, 13, 5, 5, 5, 5, 5, 5, 5, 13, 5, 12, 5, 5, 5, 5, 5, 3, 5, 5, 5, 6,
-        4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 11, 3, 5, 5, 5, 6,
-        8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10,
-    };
+    player.sprite.setPosition(sf::Vector2f(WIDTH/2, HEIGTH/2));
 
     TileMap map;
-    if (!map.load("assets/tilemap.png", sf::Vector2u(64,64), background, 24, 12)) {
+    if (!map.load("assets/tilemap.png", sf::Vector2u(64,64), background, 30, 14)) {
         std::cout << "FAILED TO LOAD FILEMAP" << std::endl;
         return -1;
     };
@@ -61,11 +39,15 @@ int main()
                 window.close();
         }
 
-        player.update();
-
         window.clear();
+        
+        player.update();
+        view.update();
+        
+        window.setView(view.view);
         window.draw(map);
         window.draw(player.sprite);
+
         window.display();
     }
 
