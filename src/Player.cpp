@@ -9,22 +9,35 @@ public:
         }
         sprite.setTexture(texture);
     }
-
+    
     void update() {
+        sf::Vector2f position = sprite.getPosition();
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            sprite.move(-7, 0);
-        }
+            if (position.x > 0) {
+                sprite.move(-7, 0);
+            }
             
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            sprite.move(7, 0);
+            if (position.x < 1856) {
+                sprite.move(7, 0);
+            }
+            
         }
             
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            sprite.move(0, -7);
+            if (position.y > 0) {
+                sprite.move(0, -7);
+            }
+            
         }
             
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            sprite.move(0, 7);
+            if (position.y < 832) {
+                sprite.move(0, 7);
+            }
+            
         }
     }
 };

@@ -9,22 +9,34 @@ public:
     }
 
     sf::View view;
-
+    
     void update() {
+        sf::Vector2f position = view.getCenter();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            view.move(-7, 0);
-        }
+            if (position.x > 484) {
+                view.move(-7, 0);
+            }
             
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            view.move(7, 0);
-        }
+            if (position.x < 1436) {
+                view.move(7, 0);
+            }
             
+        }
+        
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            view.move(0, -7);
+            if (position.y > 230) {
+                view.move(0, -7);
+            }
+            
         }
             
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            view.move(0, 7);
+            if (position.y < 672) {
+                view.move(0, 7);
+            }
+            
         }
     }
 };
