@@ -5,19 +5,31 @@ const int cubeCoutY = 8;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(cubeCountx*64, cubeCoutY*64), "FarmTheClock", sf::Style::Close);
+    // window-size = (16*64,8*64)
+    sf::RenderWindow window(sf::VideoMode(1024, 512), "FarmTheClock", sf::Style::Close);
     sf::Clock clock;
     while (window.isOpen())
     {
+        // initializing deltaTime:
         float delta_time = clock.restart().asSeconds();
+
+        // events:
 
         sf::Event event;
         while (window.pollEvent(event))
         {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
+            switch (event.type)
+            {
+            case sf::Event::Closed:
                 window.close();
+                break;
+            
+            default:
+                break;
+            }
         }
+
+        // drawing, clearing and displaying:
 
         window.clear(sf::Color::Black);
 
