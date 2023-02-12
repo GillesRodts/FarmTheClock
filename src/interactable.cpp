@@ -4,6 +4,13 @@ class Interactable {
     public:
     sf::Sprite sprite;
     sf::Texture texture;
+    
+    Interactable(const std::string& texturePath) {
+        if (!texture.loadFromFile(texturePath)) {
+            std::cout << "failed to load [INTERACTABLE]" << std::endl;
+        }
+        sprite.setTexture(texture);
+    }
     Interactable(const std::string& texturePath, sf::Vector2f position) {
         if (!texture.loadFromFile(texturePath)) {
             std::cout << "failed to load [INTERACTABLE]" << std::endl;

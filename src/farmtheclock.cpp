@@ -28,9 +28,16 @@ int main()
     };
 
     Interactable den("assets/den1.png", sf::Vector2f(64.f,64.f));
+    Interactable inventory_button("assets/inv_button.png");
+
+    //TIMING
+    sf::Clock clock;
 
     while (window.isOpen())
     {
+        sf::Time delta_time = clock.restart();
+        float delta_timeAsSeconds = delta_time.asSeconds();
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -46,13 +53,18 @@ int main()
             }
         }
 
-        window.clear();
-        view.update();
-        
-        window.setView(view.view);
-        window.draw(map);
-        window.draw(den.sprite);
+        sf::Vector2f windowPos = window.mapPixelToCoords(sf::Vector2i(892, 380));
 
+        window.clear();
+
+        view.update(delta_timeAsSeconds);
+        window.setView(view.view);
+        inventory_button.sprite.setPosition(windowPos);
+        
+        window.draw(map);
+        window.draw(inventory_button.sprite);
+        window.draw(den.sprite);
+        
         window.display();
     }
 

@@ -10,33 +10,25 @@ public:
 
     sf::View view;
     
-    void update() {
+    void update(float deltatime) {
         sf::Vector2f position = view.getCenter();
+        int centerx = view.getCenter().x;
+        int centery = view.getCenter().y;
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            if (position.x > 484) {
-                view.move(-7, 0);
-            }
-            
+            centerx -= 7;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            if (position.x < 1436) {
-                view.move(7, 0);
-            }
-            
+            centerx += 7;
         }
         
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            if (position.y > 230) {
-                view.move(0, -7);
-            }
-            
+            centery -= 7;
         }
             
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            if (position.y < 672) {
-                view.move(0, 7);
-            }
-            
+            centery +=7;
         }
+        view.setCenter(centerx, centery);
     }
 };
