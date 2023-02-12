@@ -1,9 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Player.cpp"
 #include "Tilemap.cpp"
 #include "level.cpp"
 #include "MainView.cpp"
+#include "interactable.cpp"
 
 const int SIZE = 64;
 const int WIDTH = SIZE * 30;
@@ -21,32 +21,37 @@ int main()
     //setting a view
     NewView view(WIDTH, HEIGTH, 0.5);
 
-    Player player("assets/farmer-static.png");
-    player.sprite.setPosition(sf::Vector2f(WIDTH/2, HEIGTH/2));
-
     TileMap map;
     if (!map.load("assets/tilemap.png", sf::Vector2u(64,64), background, 30, 14)) {
         std::cout << "FAILED TO LOAD FILEMAP" << std::endl;
         return -1;
     };
 
+    Interactable den("assets/den1.png", sf::Vector2f(64.f,64.f));
+
     while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
+            }
+                
+            if (event.type == sf::Event::MouseButtonPressed) {
+                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+                den.isClicked(mousePos.x, mousePos.y);
+
+            }
         }
 
         window.clear();
-        
-        player.update();
         view.update();
         
         window.setView(view.view);
         window.draw(map);
-        window.draw(player.sprite);
+        window.draw(den.sprite);
 
         window.display();
     }
